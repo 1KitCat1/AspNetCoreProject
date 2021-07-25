@@ -1,4 +1,7 @@
 using AspNetCoreProject.Service;
+using AspNetCoreProject.Domain.Entities;
+using AspNetCoreProject.Domain.Repositories.Abstract;
+using AspNetCoreProject.Domain.Repositories.EntityFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreProject.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreProject
 {
@@ -24,10 +29,19 @@ namespace AspNetCoreProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //connect configurations from appsettings
             Configuration.Bind("Project", new Config());
+            
+            services.AddTransient<ITextFieldsRepository, EFTextFieldRepository>();
+            services.AddTransient<IServiceItemsRepository, EFServiceItemRepository>();
+            services.AddTransient<DataManager>();
+
+            //connecting DB
+            services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Config.ConnectionString));
             services.AddRazorPages();
             services.AddControllersWithViews().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0)
                 .AddSessionStateTempDataProvider();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

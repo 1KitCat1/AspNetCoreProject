@@ -19,7 +19,6 @@
     <Folder Include="Areas\Admin\Views\" />
     <Folder Include="Models\ViewComponents\" />
     <Folder Include="wwwroot\img\" />
-    <Folder Include="Domain\" />
   </ItemGroup>
 
   <ItemGroup>

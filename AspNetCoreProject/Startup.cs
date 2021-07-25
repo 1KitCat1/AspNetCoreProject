@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreProject.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace AspNetCoreProject
 {
@@ -38,6 +39,18 @@ namespace AspNetCoreProject
 
             //connecting DB
             services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Config.ConnectionString));
+
+            //identity settings
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+            });
+
+            //
+
             services.AddRazorPages();
             services.AddControllersWithViews().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0)
                 .AddSessionStateTempDataProvider();

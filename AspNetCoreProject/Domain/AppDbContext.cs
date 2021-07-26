@@ -15,7 +15,5 @@ namespace AspNetCoreProject.Domain
         public DbSet<TextField> TextFields { get; set; }
         public DbSet<ServiceItem> ServiceItems { get; set; }
 
-
-
     }
 }
